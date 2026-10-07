@@ -74,12 +74,22 @@ export default function CustomerDetailScreen() {
       <ScreenHeader
         title={fullName}
         rightAction={
-          <Pressable
-            onPress={() => router.push(`/(app)/customers/${customer.id}/edit`)}
-            hitSlop={8}
-          >
-            <Ionicons name="create-outline" size={22} color={colors.accent} />
-          </Pressable>
+          <View style={styles.headerActions}>
+            <Pressable
+              onPress={() =>
+                router.push({ pathname: '/(app)/orders/new', params: { customerId: customer.id } })
+              }
+              hitSlop={8}
+            >
+              <Ionicons name="add-circle-outline" size={22} color={colors.accent} />
+            </Pressable>
+            <Pressable
+              onPress={() => router.push(`/(app)/customers/${customer.id}/edit`)}
+              hitSlop={8}
+            >
+              <Ionicons name="create-outline" size={22} color={colors.accent} />
+            </Pressable>
+          </View>
         }
       />
 
@@ -236,6 +246,11 @@ function OrderRow({ order, currency }: { order: Order; currency: string }) {
 }
 
 const styles = StyleSheet.create({
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
   contactRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
