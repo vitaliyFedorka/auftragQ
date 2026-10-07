@@ -30,6 +30,7 @@ export const Input = forwardRef<TextInput, InputProps>(({ label, error, style, .
             backgroundColor: colors.surface,
             borderColor: error ? colors.danger : colors.border,
           },
+          rest.multiline ? styles.multiline : null,
           style,
         ]}
         {...rest}
@@ -54,5 +55,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
+  },
+  multiline: {
+    minHeight: 96,
+    textAlignVertical: 'top',
   },
 });
