@@ -5,7 +5,8 @@ module.exports = [
   ...expoConfig,
   prettierConfig,
   {
-    ignores: ['dist/*', '.expo/*', 'node_modules/*'],
+    // supabase/functions runs on Deno (its own globals, import style, lint rules) — not this project's ESLint config.
+    ignores: ['dist/*', '.expo/*', 'node_modules/*', 'supabase/**'],
   },
   {
     rules: {

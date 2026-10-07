@@ -5,6 +5,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from
 
 import { ScreenContainer } from '@/components/ScreenContainer';
 import { ScreenHeader } from '@/components/ScreenHeader';
+import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorState } from '@/components/ui/ErrorState';
@@ -135,6 +136,12 @@ export default function OrderDetailScreen() {
             <FinanceLine label="Est. profit" value={formatCurrency(profit, currency)} emphasize />
           </View>
         </Card>
+
+        <Button
+          label="Generate reply"
+          variant="secondary"
+          onPress={() => router.push(`/(app)/orders/${order.id}/reply`)}
+        />
 
         {actionError ? <Text style={{ color: colors.danger }}>{actionError}</Text> : null}
         <Pressable onPress={() => setConfirmDelete(true)} style={styles.deleteRow}>
