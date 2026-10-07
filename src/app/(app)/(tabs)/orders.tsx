@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { ScreenContainer } from '@/components/ScreenContainer';
+import { BottomSheet } from '@/components/ui/BottomSheet';
 import { ChipGroup } from '@/components/ui/ChipGroup';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorState } from '@/components/ui/ErrorState';
@@ -23,6 +24,7 @@ export default function OrdersScreen() {
   const { profile } = useSession();
   const [filter, setFilter] = useState<OrderFilter>('all');
   const [search, setSearch] = useState('');
+  const [createSheetOpen, setCreateSheetOpen] = useState(false);
   const { data: orders, isLoading, isError, error, refetch } = useOrders();
 
   const visible = useMemo(() => {
@@ -40,7 +42,7 @@ export default function OrdersScreen() {
     <ScreenContainer style={{ gap: spacing.md }}>
       <View style={styles.header}>
         <Text style={[typography.title, { color: colors.text }]}>Orders</Text>
-        <Pressable onPress={() => router.push('/(app)/orders/new')} hitSlop={8}>
+        <Pressable onPress={() => setCreateSheetOpen(true)} hitSlop={8}>
           <Ionicons name="add-circle" size={32} color={colors.accent} />
         </Pressable>
       </View>
@@ -81,6 +83,33 @@ export default function OrdersScreen() {
           )}
         />
       )}
+
+      <BottomSheet
+        visible={createSheetOpen}
+        title="New order"
+        onClose={() => setCreateSheetOpen(false)}
+      >
+        <Pressable
+          style={styles.sheetRow}
+          onPress={() => {
+            setCreateSheetOpen(false);
+            router.push('/(app)/orders/new');
+          }}
+        >
+          <Ionicons name="create-outline" size={20} color={colors.text} />
+          <Text style={[typography.body, { color: colors.text }]}>Write manually</Text>
+        </Pressable>
+        <Pressable
+          style={styles.sheetRow}
+          onPress={() => {
+            setCreateSheetOpen(false);
+            router.push('/(app)/orders/ai-create');
+          }}
+        >
+          <Ionicons name="sparkles-outline" size={20} color={colors.text} />
+          <Text style={[typography.body, { color: colors.text }]}>From customer message (AI)</Text>
+        </Pressable>
+      </BottomSheet>
     </ScreenContainer>
   );
 }
@@ -90,5 +119,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  sheetRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.md,
   },
 });

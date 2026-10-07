@@ -50,6 +50,7 @@ src/
   utils/          Pure helpers (currency, dates, error messages)
 supabase/
   migrations/     SQL schema + Row Level Security policies
+  functions/      AI Edge Functions (provider-independent AIProvider interface)
 ```
 
 Business logic lives in `features/`, not in screen components under `app/`.
@@ -59,8 +60,8 @@ Business logic lives in `features/`, not in screen components under `app/`.
 - Row Level Security is enabled on every table; a user can only ever read or
   write their own rows (`auth.uid()` scoping) — see `supabase/migrations/0001_init.sql`.
 - The mobile client never calls an LLM provider directly. AI features call a
-  server-side abstraction (Supabase Edge Function) that holds provider keys;
-  this lands in Phase 6.
+  server-side abstraction (Supabase Edge Functions in `supabase/functions/`)
+  that holds provider keys — see `supabase/README.md` for deployment.
 - Supabase credentials in `.env` are the public anon key, safe to ship — RLS
   is what actually protects the data.
 
@@ -68,12 +69,12 @@ Business logic lives in `features/`, not in screen components under `app/`.
 
 Built in phases, each on its own branch off `develop`:
 
-1. **Project setup** — this branch: Expo Router, auth, onboarding, Supabase, DB schema.
-2. Customers CRUD
-3. Orders CRUD
-4. Dashboard
-5. Calendar
-6. AI Create Order (text → structured order via server-side AI service)
+1. ✅ Project setup — Expo Router, auth, onboarding, Supabase, DB schema.
+2. ✅ Customers CRUD
+3. ✅ Orders CRUD
+4. ✅ Dashboard
+5. ✅ Calendar
+6. ✅ AI Create Order (text → structured order via server-side AI service) + Generate Reply
 7. Order images (Supabase Storage)
 8. Notifications (local reminders)
 9. UI polish
