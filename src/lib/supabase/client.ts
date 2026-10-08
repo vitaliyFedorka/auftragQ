@@ -1,9 +1,15 @@
 import 'react-native-url-polyfill/auto';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
+import { Platform } from 'react-native';
 
 import { LargeSecureStore } from './largeSecureStore';
 import type { Database } from './types';
+
+// expo-secure-store has no web implementation; fall back to AsyncStorage (web localStorage)
+// there. Native keeps the encrypted LargeSecureStore adapter.
+const authStorage = Platform.OS === 'web' ? AsyncStorage : new LargeSecureStore();
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
@@ -16,7 +22,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
-    storage: new LargeSecureStore(),
+    storage: authStorage,
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
