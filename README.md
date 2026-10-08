@@ -5,6 +5,14 @@ A mobile business assistant for solo entrepreneurs and small service businesses
 vendors) — turn customer requests into structured orders, track payments and
 appointments, and use AI to save time on repetitive writing.
 
+**Status:** MVP in active development — Phases 1–6 of 9 complete (auth, customers,
+orders, dashboard, calendar, AI order creation). See [Roadmap](#roadmap).
+
+|                                           |                                               |
+| ----------------------------------------- | --------------------------------------------- |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Orders](docs/screenshots/orders-list.png) |
+| ![AI-reviewed order](docs/screenshots/ai-review.png) | ![Calendar](docs/screenshots/calendar.png) |
+
 ## Stack
 
 Expo (SDK 57) · Expo Router · TypeScript (strict) · Supabase (Auth/Postgres/Storage)
